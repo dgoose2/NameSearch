@@ -1,6 +1,10 @@
 package com.dgoose.mod;
 
 
+import com.dgoose.mod.util.RegistryHandler;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -13,10 +17,13 @@ import org.apache.logging.log4j.Logger;
 public class Tutorial
 {
     private static final Logger LOGGER = LogManager.getLogger();
+    public static final String MOD_ID = "tutorial";
 
     public Tutorial() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+
+        RegistryHandler.init();
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -24,4 +31,11 @@ public class Tutorial
     private void setup(final FMLCommonSetupEvent event) { }
 
     private void doClientStuff(final FMLClientSetupEvent event) { }
+
+    public static final ItemGroup TAB = new ItemGroup("tutorialTab") {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(RegistryHandler.RUBY.get());
+        }
+    };
 }
